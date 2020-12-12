@@ -9,6 +9,7 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use PragmaRX\Google2FALaravel\Google2FA;
 
 class RegisteredUserController extends Controller
 {
@@ -22,15 +23,7 @@ class RegisteredUserController extends Controller
         return view('auth.register');
     }
 
-    /**
-     * Handle an incoming registration request.
-     *
-     * @param  \App\Http\Requests\LoginRequest  $request
-     * @return \Illuminate\Http\RedirectResponse
-     *
-     * @throws \Illuminate\Validation\ValidationException
-     */
-    public function store(Request $request)
+    public function register(Request $request)
     {
         $request->validate([
             'name' => 'required|string|max:255',
@@ -38,10 +31,35 @@ class RegisteredUserController extends Controller
             'password' => 'required|string|confirmed|min:8',
         ]);
 
+        $google2fa = new Google2FA($request);
+
+        $request->request->add([
+            'google2fa_secret' => $google2fa->generateSecretKey()
+        ]);
+
+        $request->session()->flash('registration_data', $request->all());
+
+        $url = $google2fa->getQRCodeUrl(
+            config('app.name'),
+            $request->email,
+            $request->google2fa_secret
+        );
+
+        return view('google2fa.register', [
+            'url' => $url,
+            'secret' => $request->google2fa_secret
+        ]);
+    }
+
+    public function store(Request $request)
+    {
+        $request->merge(session('registration_data'));
+
         Auth::login($user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'google2fa_secret' => $request->google2fa_secret
         ]));
 
         event(new Registered($user));

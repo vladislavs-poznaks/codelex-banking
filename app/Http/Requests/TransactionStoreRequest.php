@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Rules\AccountHasSufficientFunds;
+use App\Rules\OneTimePasswordIsValid;
 use Illuminate\Foundation\Http\FormRequest;
 
 class TransactionStoreRequest extends FormRequest
@@ -11,7 +12,8 @@ class TransactionStoreRequest extends FormRequest
     {
         return [
             'partner' => ['required', 'exists:accounts,number', 'not_in:' . $this->account->number],
-            'amount' => ['required', 'gte:1', new AccountHasSufficientFunds($this->account)]
+            'amount' => ['required', 'gte:1', new AccountHasSufficientFunds($this->account)],
+            'one_time_password' => ['required', new OneTimePasswordIsValid($this)],
         ];
     }
 

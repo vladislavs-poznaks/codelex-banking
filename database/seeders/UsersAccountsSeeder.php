@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Account;
 use App\Models\Currency;
 use App\Models\User;
+use App\Repositories\Currencies\CurrencyRepository;
 use App\Repositories\Currencies\LatviaBankCurrencyRepository;
 use Illuminate\Database\Seeder;
 
@@ -12,7 +13,7 @@ class UsersAccountsSeeder extends Seeder
 {
     public function run()
     {
-        (new LatviaBankCurrencyRepository())->updateCurrencies();
+        app(CurrencyRepository::class)->updateCurrencies();
 
         User::factory()->count(10)->create()->each(function ($user) {
             Account::factory()->create([

@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\Account;
 use App\Models\User;
+use App\Repositories\Currencies\CurrencyRepository;
 use App\Repositories\Currencies\LatviaBankCurrencyRepository;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Response;
@@ -27,7 +28,7 @@ class AccountsControllerTest extends TestCase
         $this->actingAs($user = User::factory()->create());
         $this->withoutMiddleware(Middleware::class);
 
-        $currencies = (new LatviaBankCurrencyRepository())->getCurrencies();
+        $currencies = app(CurrencyRepository::class)->getCurrencies();
         $currency = $currencies->random();
 
         $this->post(route('accounts.store', [
@@ -49,7 +50,7 @@ class AccountsControllerTest extends TestCase
         $this->actingAs($user = User::factory()->create());
         $this->withoutMiddleware(Middleware::class);
 
-        $currencies = (new LatviaBankCurrencyRepository())->getCurrencies();
+        $currencies = app(CurrencyRepository::class)->getCurrencies();
         $currency = $currencies->random();
 
         $this->post(route('accounts.store', [
@@ -71,7 +72,7 @@ class AccountsControllerTest extends TestCase
         $this->actingAs($user = User::factory()->create());
         $this->withoutMiddleware(Middleware::class);
 
-        $currencies = (new LatviaBankCurrencyRepository())->getCurrencies();
+        $currencies = app(CurrencyRepository::class)->getCurrencies();
         $currency = $currencies->random();
 
         $this->post(route('accounts.store', [

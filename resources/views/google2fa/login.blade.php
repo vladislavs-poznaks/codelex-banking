@@ -9,7 +9,7 @@
         <form method="POST" action="{{ route('2fa') }}">
         @csrf
 
-        <!-- Email Address -->
+        <!-- OTP -->
             <div>
                 <x-label for="otp" value="Enter your One Time Password"/>
 
@@ -23,10 +23,13 @@
                     autofocus
                 />
             </div>
+            @error('one_time_password')
+                <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
+            @enderror
 
             <div class="flex items-center justify-around mt-4">
                 <x-button class="ml-3">
-                    {{ __('Continue') }}
+                    {{ __('Confirm') }}
                 </x-button>
             </div>
             </div>

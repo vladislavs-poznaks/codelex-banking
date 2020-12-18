@@ -1,4 +1,4 @@
-<div class="border border-gray-700 rounded-lg mt-10">
+<div class="w-full mt-6 px-6 py-4 bg-white shadow-md sm:rounded-lg">
     <form action="{{ route('accounts.store') }}" method="POST" class="space-y-6 px-4 py-6">
         @csrf
 

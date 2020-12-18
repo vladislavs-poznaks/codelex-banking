@@ -11,9 +11,9 @@ class LatviaBankCurrencyRepository implements CurrencyRepository
     private $url = 'https://www.bank.lv/vk/ecb.xml';
     private Service $service;
 
-    public function __construct()
+    public function __construct(Service $service)
     {
-        $this->service = new Service();
+        $this->service = $service;
     }
 
     public function getCurrencies()

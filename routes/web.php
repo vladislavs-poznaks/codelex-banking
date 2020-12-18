@@ -17,17 +17,15 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth')->group(function () {
 
-    Route::post('/2fa', function () {
-
-        return redirect(\route('dashboard'));
-
+    Route::post('/dashboard', function () {
+        return redirect('/dashboard');
     })->name('2fa')->middleware('2fa');
 
     Route::middleware('2fa')->group(function () {
 
         Route::get('/dashboard', [AccountsController::class, 'index'])->name('dashboard');
         Route::get('/', function () {
-            return view('dashboard');
+            return redirect('dashboard');
         });
 
         Route::resource('accounts', AccountsController::class)->only([
@@ -45,4 +43,4 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

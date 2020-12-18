@@ -2,19 +2,22 @@
 
 @section('content')
     <x-account-edit :account="$account"/>
+
     <x-transaction-create :account="$account"/>
 
-    <div class="border border-gray-700 rounded-lg mt-10">
-        <h3 class="border-b border-gray-700 px-4 py-6">
+    <div class="w-full mt-6 px-6 py-4 bg-white shadow-md sm:rounded-lg">
+        <h3 class="border-b border-gray-300 px-4 py-6">
             Transactions
         </h3>
 
         @forelse($transactions as $transaction)
-            <div class="{{ $loop->last ? '' : 'border-b border-gray-700' }} text-sm px-4 py-4 space-y-2">
+            <div class="{{ $loop->last ? '' : 'border-b border-gray-300' }} text-sm px-4 py-4 space-y-2">
                 <div class="space-y-2">
                     <div class="flex justify-between items-center">
-                        <div class="flex space-x-3">
-                            <span class="text-{{ $transaction->isIncoming() ? 'green' : 'red' }}-500">
+                        <div class="flex space-x-3 items-center">
+                            <span class="text-{{ $transaction->isIncoming() ? 'green' : 'red' }}-600
+                            bg-{{ $transaction->isIncoming() ? 'green' : 'red' }}-100
+                            px-3 py-1 rounded-full font-semibold">
                                 {{ $transaction->present()->funds() }}
                             </span>
                             <span>

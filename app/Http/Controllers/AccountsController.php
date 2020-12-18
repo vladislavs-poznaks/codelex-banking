@@ -5,11 +5,11 @@ namespace App\Http\Controllers;
 use App\Helpers\AccountNumberGenerator;
 use App\Http\Requests\AccountStoreRequest;
 use App\Models\Account;
-use App\Repositories\Currencies\LatviaBankCurrencyRepository;
+use App\Repositories\Currencies\CurrencyRepository;
 
 class AccountsController extends Controller
 {
-    public function index(LatviaBankCurrencyRepository $repository)
+    public function index(CurrencyRepository $repository)
     {
         return view('accounts.index', [
             'accounts' => auth()->user()->accounts,

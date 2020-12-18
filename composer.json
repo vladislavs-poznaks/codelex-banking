@@ -16,7 +16,6 @@
         "laravel/tinker": "^2.5",
         "livewire/livewire": "^2.3",
         "moneyphp/money": "^3.3",
-        "pragmarx/google2fa": "^8.0",
         "pragmarx/google2fa-laravel": "^1.4",
         "sabre/xml": "^2.2",
         "simplesoftwareio/simple-qrcode": "~4"
